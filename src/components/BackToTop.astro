@@ -1,0 +1,41 @@
+---
+/**
+ * BackToTop Component
+ * Floating button that appears after scrolling 500px
+ * Smooth scroll to top on click
+ */
+---
+
+<button
+  id="back-to-top"
+  class="fixed bottom-8 right-8 w-12 h-12 rounded-lg glass flex items-center justify-center text-color-primary hover:text-color-bg hover:bg-color-primary hover:shadow-lg hover:shadow-blue-500/50 transition-all duration-300 opacity-0 translate-y-10 pointer-events-none z-40"
+  aria-label="Back to top"
+>
+  ↑
+</button>
+
+<script>
+  /**
+   * Back to Top Button Functionality
+   * - Appears after scrolling 500px
+   * - Smooth scroll to top on click
+   * - Fades in/out animation
+   */
+
+  const backToTopBtn = document.getElementById('back-to-top');
+
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 500) {
+      backToTopBtn?.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+    } else {
+      backToTopBtn?.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+    }
+  });
+
+  backToTopBtn?.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  });
+</script>

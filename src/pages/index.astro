@@ -1,0 +1,47 @@
+---
+/**
+ * Home Page
+ * Main entry point assembling all portfolio sections
+ * Renders only sections that have data
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Skills from '../components/Skills.astro';
+import Education from '../components/Education.astro';
+import Projects from '../components/Projects.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+import BackToTop from '../components/BackToTop.astro';
+import { portfolioData } from '../data/portfolio';
+---
+
+<BaseLayout title="Ahmed Ratib Alj - Computer Science Student Portfolio" description="Ahmed's portfolio showcasing projects, skills, and experiences as a Computer Science student at ESISA Fes.">
+  <Header />
+  
+  <main id="main-content">
+    <Hero />
+    <About />
+    <Skills />
+    <Education />
+    <Projects />
+    <Contact />
+  </main>
+  
+  <Footer />
+  <BackToTop />
+
+  <!-- Vercel Analytics -->
+  <script>
+    import { Telemetry } from '@vercel/analytics';
+    
+    if (typeof window !== 'undefined') {
+      Telemetry.record('page_view', {
+        path: window.location.pathname,
+        title: document.title,
+      });
+    }
+  </script>
+</BaseLayout>

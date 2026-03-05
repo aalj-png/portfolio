@@ -1,0 +1,95 @@
+---
+/**
+ * Projects Component
+ * Grid of project cards with gradient numbering
+ * Hover effects with gradient bar animation
+ * Tags for technologies used
+ */
+
+import { portfolioData } from '../data/portfolio';
+---
+
+{
+  portfolioData.projects.length > 0 && (
+    <section id="projects" class="relative py-20 md:py-32">
+      <div class="container mx-auto px-6 md:px-12">
+        <h2 class="text-4xl md:text-5xl font-bold mb-16">
+          <span class="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+            Featured Projects
+          </span>
+        </h2>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {portfolioData.projects.map((project, index) => (
+            <div
+              class="group relative p-8 rounded-xl glass border border-transparent hover:border-color-primary/30 hover:bg-color-primary/5 transition-all duration-300 hover:translate-y-[-12px] overflow-hidden"
+              style={`animation: slideInUp 0.6s ease-out ${index * 0.1}s backwards;`}
+            >
+              {/* Gradient Bar at Top (appears on hover) */}
+              <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+
+              {/* Decorative Number */}
+              <div class="absolute -top-8 -right-8 text-8xl font-bold text-color-primary/5 group-hover:text-color-primary/10 transition-colors">
+                {String(index + 1).padStart(2, '0')}
+              </div>
+
+              {/* Content */}
+              <div class="relative z-10">
+                {/* Project Title with Link */}
+                <h3 class="text-2xl font-bold text-color-text mb-4 flex items-center gap-2 group/title">
+                  {project.url ? (
+                    <a
+                      href={project.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="hover:text-color-primary transition-colors"
+                    >
+                      {project.title}
+                      <span class="opacity-0 group-hover/title:opacity-100 transition-opacity">↗</span>
+                    </a>
+                  ) : (
+                    project.title
+                  )}
+                </h3>
+
+                {/* Description */}
+                <p class="text-color-text-secondary mb-6 leading-relaxed">
+                  {project.description}
+                </p>
+
+                {/* Tech Tags */}
+                <div class="flex flex-wrap gap-2 mb-6">
+                  {project.tags.map((tag) => (
+                    <span class="px-3 py-1 rounded-full bg-color-bg-tertiary/80 text-color-text-secondary text-xs font-medium border border-color-border hover:border-color-primary/50 transition-colors">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                {/* View Button */}
+                <button
+                  class="w-full py-3 px-4 rounded-lg border-2 border-color-primary/50 text-color-primary font-semibold hover:bg-color-primary hover:text-color-bg transition-all duration-300"
+                >
+                  View Project →
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
