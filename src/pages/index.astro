@@ -33,15 +33,5 @@ import { portfolioData } from '../data/portfolio';
   <Footer />
   <BackToTop />
 
-  <!-- Vercel Analytics -->
-  <script>
-    import { Telemetry } from '@vercel/analytics';
-    
-    if (typeof window !== 'undefined') {
-      Telemetry.record('page_view', {
-        path: window.location.pathname,
-        title: document.title,
-      });
-    }
-  </script>
+  <!-- Vercel Analytics (enabled in Vercel dashboard) -->
 </BaseLayout>
