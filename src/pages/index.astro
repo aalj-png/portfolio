@@ -1,0 +1,35 @@
+---
+/**
+ * Home Page - Portfolio Index
+ * Assembles all sections based on available data
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import BackToTop from '../components/BackToTop.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Skills from '../components/Skills.astro';
+import Education from '../components/Education.astro';
+import Experience from '../components/Experience.astro';
+import Projects from '../components/Projects.astro';
+import Contact from '../components/Contact.astro';
+import { portfolioData } from '../data/portfolio';
+---
+
+<BaseLayout title={`${portfolioData.personal.firstName} ${portfolioData.personal.lastName} - Portfolio`}>
+  <Header />
+  
+  <Hero />
+  <About />
+  <Skills />
+  <Education />
+  
+  {portfolioData.experience && portfolioData.experience.length > 0 && <Experience />}
+  
+  <Projects />
+  <Contact />
+  
+  <Footer />
+  <BackToTop />
+</BaseLayout>

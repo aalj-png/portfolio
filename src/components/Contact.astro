@@ -1,0 +1,390 @@
+---
+/**
+ * Contact Component
+ * Contact information and form for getting in touch
+ */
+import { portfolioData } from '../data/portfolio';
+
+const { personal, contact, social } = portfolioData;
+
+const contactInfo = [
+  {
+    label: 'Email',
+    value: personal.email,
+    icon: 'Mail',
+  },
+  {
+    label: 'Location',
+    value: personal.location,
+    icon: 'MapPin',
+  },
+];
+
+const icons: Record<string, string> = {
+  Mail: '<rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>',
+  MapPin: '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle>',
+  Github: '<path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 0c4.3 1.4 4.3-2.5 6-3M9 19c0 1.5.5 2 2 2s2-.5 2-2m-6-6v-6c0-1 .5-2 2-2h4c1.5 0 2 .5 2 2v4c0 1-.5 2-2 2h-4c-1.5 0-2-1-2-2zm4-2h2"></path>',
+  Linkedin: '<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"></path><circle cx="4" cy="4" r="2"></circle>',
+  Send: '<path d="M22 2 11 13"></path><path d="M22 2l-7 20-5-9-9-5 20-7z"></path>',
+};
+
+function getIcon(iconName: string): string {
+  return icons[iconName] || icons.Mail;
+}
+---
+
+<section id="contact" class="contact" data-reveal>
+  <div class="section-container">
+    <div class="section-header">
+      <h2 class="section-title">Get In Touch</h2>
+      <p class="section-subtitle">Let's connect and discuss opportunities</p>
+    </div>
+
+    <div class="contact-grid">
+      <!-- Contact Info Column -->
+      <div class="contact-info-column">
+        <div class="contact-cards">
+          {contactInfo.map((info) => (
+            <div class="info-card">
+              <div class="info-icon-container">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path set:html={getIcon(info.icon)} />
+                </svg>
+              </div>
+              <div>
+                <p class="info-label">{info.label}</p>
+                {info.label === 'Email' ? (
+                  <a href={`mailto:${info.value}`} class="info-value">{info.value}</a>
+                ) : (
+                  <p class="info-value">{info.value}</p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- Social Links -->
+        <div class="social-section">
+          <h3 class="social-title">Connect With Me</h3>
+          <div class="social-grid">
+            {social.map((link) => (
+              <a href={link.url} target="_blank" rel="noopener noreferrer" class="social-square" title={link.platform}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path set:html={getIcon(link.icon)} />
+                </svg>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Form Column -->
+      <div class="contact-form-column">
+        <form action={`https://formsubmit.co/${personal.email}`} method="POST" class="contact-form">
+          <div class="form-group">
+            <label for="name" class="form-label">Full Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              class="form-input"
+              placeholder="Your name"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="email" class="form-label">Email Address</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              class="form-input"
+              placeholder="your@email.com"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="subject" class="form-label">Subject</label>
+            <input
+              type="text"
+              id="subject"
+              name="subject"
+              required
+              class="form-input"
+              placeholder="How can I help you?"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="message" class="form-label">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              required
+              class="form-input form-textarea"
+              placeholder="Your message here..."
+              rows="5"
+            ></textarea>
+          </div>
+
+          <!-- Anti-spam -->
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_next" value={`https://portfolio-ahmed-ratib-alj.vercel.app?success=true`} />
+
+          <button type="submit" class="form-submit">
+            Send Message
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path set:html={getIcon('Send')} />
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact {
+    padding: 5rem 2rem;
+    background: linear-gradient(to bottom, rgba(255, 0, 110, 0.02), transparent);
+  }
+
+  .section-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+
+  .section-subtitle {
+    font-size: 1.125rem;
+    color: var(--text-muted);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+
+  /* Info Column */
+  .contact-info-column {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .contact-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .info-card {
+    background: var(--glass);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    transition: all 0.3s ease;
+  }
+
+  .info-card:hover {
+    border-color: var(--primary-color);
+    background: rgba(15, 22, 40, 0.7);
+    transform: translateY(-4px);
+  }
+
+  .info-icon-container {
+    width: 48px;
+    height: 48px;
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+  }
+
+  .info-card:hover .info-icon-container {
+    transform: scale(1.15);
+    background: rgba(0, 212, 255, 0.2);
+    box-shadow: 0 0 12px rgba(0, 212, 255, 0.2);
+  }
+
+  .info-label {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+  }
+
+  .info-value {
+    font-size: 1.125rem;
+    color: var(--text-primary);
+    font-weight: 600;
+    transition: color 0.3s ease;
+  }
+
+  .info-card:hover .info-value {
+    color: var(--primary-color);
+  }
+
+  /* Social Section */
+  .social-section {
+    margin-top: 1rem;
+  }
+
+  .social-title {
+    font-size: 1.125rem;
+    color: var(--text-primary);
+    margin-bottom: 1.25rem;
+  }
+
+  .social-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .social-square {
+    width: 100%;
+    aspect-ratio: 1;
+    background: var(--glass);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    transition: all 0.3s ease;
+  }
+
+  .social-square:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    background: rgba(0, 212, 255, 0.1);
+    transform: translateY(-4px);
+  }
+
+  /* Contact Form Column */
+  .contact-form-column {
+    display: flex;
+    align-items: center;
+  }
+
+  .contact-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-label {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  .form-input {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 0.875rem 1.25rem;
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+  }
+
+  .form-input::placeholder {
+    color: var(--text-muted);
+  }
+
+  .form-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background: rgba(0, 212, 255, 0.05);
+    box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+  }
+
+  .form-textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .form-submit {
+    padding: 1rem 2rem;
+    background: var(--gradient-primary);
+    color: var(--bg-primary);
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .form-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 212, 255, 0.3);
+  }
+
+  .form-submit:active {
+    transform: translateY(0);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .contact {
+      padding: 3rem 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.875rem;
+    }
+
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .social-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .form-input {
+      padding: 0.75rem 1rem;
+    }
+  }
+</style>

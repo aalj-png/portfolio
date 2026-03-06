@@ -1,0 +1,228 @@
+---
+/**
+ * Experience Component
+ * Shows professional and volunteer experience (optional - only if data exists)
+ */
+import { portfolioData } from '../data/portfolio';
+
+const { experience } = portfolioData;
+---
+
+{experience && experience.length > 0 && (
+  <section id="experience" class="experience" data-reveal>
+    <div class="section-container">
+      <div class="section-header">
+        <h2 class="section-title">Experience</h2>
+        <p class="section-subtitle">My professional and volunteer journey</p>
+      </div>
+
+      <div class="experience-grid stagger-children">
+        {experience.map((exp) => (
+          <div class="exp-card">
+            <div class="exp-accent"></div>
+            
+            <div class="exp-badges">
+              <span class="exp-type-badge" data-type={exp.type}>
+                {exp.type.charAt(0).toUpperCase() + exp.type.slice(1)}
+              </span>
+              {exp.isCurrent && <span class="exp-current-badge">Current</span>}
+            </div>
+
+            <div class="exp-date">{exp.startDate} {exp.endDate ? `- ${exp.endDate}` : '- Present'}</div>
+
+            <h3 class="exp-title">{exp.title}</h3>
+
+            <div class="exp-company">
+              {exp.companyUrl ? (
+                <a href={exp.companyUrl} target="_blank" rel="noopener noreferrer">
+                  {exp.company}
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                  </svg>
+                </a>
+              ) : (
+                <span>{exp.company}</span>
+              )}
+            </div>
+
+            {exp.description && <p class="exp-description">{exp.description}</p>}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .experience {
+    padding: 5rem 2rem;
+    background: linear-gradient(to bottom, transparent, rgba(255, 0, 110, 0.03));
+  }
+
+  .section-container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+
+  .section-subtitle {
+    font-size: 1.125rem;
+    color: var(--text-muted);
+  }
+
+  .experience-grid {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .exp-card {
+    background: var(--glass);
+    padding: 2.5rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .exp-accent {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--gradient-primary);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.3s ease;
+  }
+
+  .exp-card:hover .exp-accent {
+    transform: scaleY(1);
+  }
+
+  .exp-card:hover {
+    border-color: var(--primary-color);
+    transform: translateX(8px);
+    background: rgba(15, 22, 40, 0.7);
+  }
+
+  .exp-badges {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .exp-type-badge,
+  .exp-current-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--radius-full);
+  }
+
+  .exp-type-badge[data-type="job"] {
+    background: rgba(0, 212, 255, 0.15);
+    color: var(--primary-color);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+  }
+
+  .exp-type-badge[data-type="internship"] {
+    background: rgba(255, 165, 0, 0.15);
+    color: var(--warning-color);
+    border: 1px solid rgba(255, 165, 0, 0.3);
+  }
+
+  .exp-type-badge[data-type="freelance"] {
+    background: rgba(0, 217, 126, 0.15);
+    color: var(--success-color);
+    border: 1px solid rgba(0, 217, 126, 0.3);
+  }
+
+  .exp-type-badge[data-type="volunteer"] {
+    background: rgba(255, 0, 110, 0.15);
+    color: var(--accent-color);
+    border: 1px solid rgba(255, 0, 110, 0.3);
+  }
+
+  .exp-current-badge {
+    background: rgba(0, 217, 126, 0.2);
+    color: var(--success-color);
+    border: 1px solid var(--success-color);
+  }
+
+  .exp-date {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .exp-title {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .exp-company {
+    margin-bottom: 1rem;
+  }
+
+  .exp-company a,
+  .exp-company span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary-color);
+    font-weight: 600;
+    transition: color 0.3s ease;
+  }
+
+  .exp-company a:hover {
+    color: var(--primary-dark);
+  }
+
+  .exp-description {
+    color: var(--text-muted);
+    line-height: 1.8;
+    font-size: 0.95rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .experience {
+      padding: 3rem 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.875rem;
+    }
+
+    .exp-card {
+      padding: 1.75rem;
+    }
+
+    .exp-title {
+      font-size: 1.25rem;
+    }
+
+    .exp-card:hover {
+      transform: translateX(4px);
+    }
+  }
+</style>

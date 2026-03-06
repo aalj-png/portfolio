@@ -1,0 +1,17 @@
+{
+  "buildCommand": "npm run build",
+  "installCommand": "npm install",
+  "framework": "astro",
+  "outputDirectory": "dist",
+  "env": {
+    "VERCEL_ANALYTICS_ID": "@vercel/analytics"
+  },
+  "git": {
+    "deploymentEnabled": {
+      "main": true
+    }
+  },
+  "alias": [
+    "portfolio-ahmed-ratib-alj.vercel.app"
+  ]
+}

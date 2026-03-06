@@ -1,0 +1,441 @@
+---
+/**
+ * Hero Component
+ * Full-height section with gradient text, profile image, stats, and CTA buttons
+ */
+import { portfolioData } from '../data/portfolio';
+
+const { personal, stats, social } = portfolioData;
+const { firstName, lastName, title, subtitle, avatar } = personal;
+---
+
+<section id="hero" class="hero" data-reveal>
+  <div class="hero-content">
+    <div class="hero-text">
+      <!-- Availability Badge -->
+      <div class="availability-badge">
+        <span class="pulse-dot"></span>
+        Available for Internships & Opportunities
+      </div>
+
+      <!-- Main Heading -->
+      <h1 class="hero-title">
+        <span class="gradient-text">{firstName} {lastName}</span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="hero-subtitle">{title}</p>
+      <p class="hero-description">{subtitle}</p>
+
+      <!-- CTA Buttons -->
+      <div class="hero-buttons">
+        <a href="#projects" class="btn btn-primary">
+          View My Work
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14"></path>
+            <path d="m12 5 7 7-7 7"></path>
+          </svg>
+        </a>
+        <a href="mailto:{personal.email}" class="btn btn-secondary">
+          Get In Touch
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Social Pills -->
+      <div class="social-pills">
+        {social.map((link) => (
+          <a href={link.url} target="_blank" rel="noopener noreferrer" class="social-pill" title={link.platform}>
+            <span>{link.platform}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Profile Image -->
+    <div class="hero-image">
+      <div class="image-container">
+        <img src={avatar} alt={firstName + ' ' + lastName} />
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Grid -->
+  {stats && stats.length > 0 && (
+    <div class="stats-grid stagger-children">
+      {stats.map((stat) => (
+        <div class="stat-card">
+          <p class="stat-value gradient-text">{stat.value}</p>
+          <p class="stat-label">{stat.label}</p>
+        </div>
+      ))}
+    </div>
+  )}
+
+  <!-- Scroll Indicator -->
+  <div class="scroll-indicator">
+    <div class="mouse">
+      <div class="wheel"></div>
+    </div>
+    <p>Scroll to explore</p>
+  </div>
+</section>
+
+<style>
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 6rem 2rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    width: 100%;
+  }
+
+  /* Text Section */
+  .availability-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    padding: 0.75rem 1.25rem;
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    color: var(--primary-color);
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    width: fit-content;
+  }
+
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--success-color);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  .hero-title {
+    font-size: 4rem;
+    font-weight: 900;
+    margin: 1rem 0;
+    line-height: 1.1;
+  }
+
+  .gradient-text {
+    background: linear-gradient(90deg, #00d4ff 0%, #ff006e 50%, #00d97e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmerText 4s ease-in-out infinite;
+  }
+
+  @keyframes shimmerText {
+    0%, 100% {
+      background: linear-gradient(90deg, #00d4ff 0%, #ff006e 50%, #00d97e 100%);
+      background-position: 0%;
+    }
+    50% {
+      background: linear-gradient(90deg, #ff006e 0%, #00d97e 50%, #00d4ff 100%);
+      background-position: 100%;
+    }
+  }
+
+  .hero-subtitle {
+    font-size: 1.75rem;
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-description {
+    font-size: 1.125rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    line-height: 1.8;
+  }
+
+  /* Buttons */
+  .hero-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 1.75rem;
+    border-radius: var(--radius-lg);
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    font-size: 1rem;
+  }
+
+  .btn-primary {
+    background: var(--gradient-primary);
+    color: var(--bg-primary);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 212, 255, 0.3);
+  }
+
+  .btn-secondary {
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+  }
+
+  .btn-secondary:hover {
+    background: rgba(0, 212, 255, 0.2);
+    border-color: var(--primary-dark);
+    color: var(--primary-dark);
+  }
+
+  /* Social Pills */
+  .social-pills {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .social-pill {
+    padding: 0.75rem 1.25rem;
+    background: rgba(15, 22, 40, 0.5);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-full);
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .social-pill:hover {
+    background: rgba(0, 212, 255, 0.1);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+  }
+
+  /* Image Section */
+  .hero-image {
+    perspective: 1000px;
+  }
+
+  .image-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    background: var(--gradient-primary);
+    padding: 3px;
+    animation: hueRotation 8s linear infinite;
+  }
+
+  @keyframes hueRotation {
+    0% {
+      filter: hue-rotate(0deg);
+    }
+    100% {
+      filter: hue-rotate(360deg);
+    }
+  }
+
+  .image-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-primary);
+    border-radius: var(--radius-xl);
+    opacity: 0.3;
+    z-index: -1;
+  }
+
+  .image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: calc(var(--radius-xl) - 3px);
+    transition: transform 0.3s ease;
+  }
+
+  .hero-image:hover .image-container img {
+    transform: scale(1.05);
+  }
+
+  /* Stats Grid */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin-top: 4rem;
+    width: 100%;
+    max-width: 1200px;
+  }
+
+  .stat-card {
+    background: var(--glass);
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .stat-card:hover {
+    background: rgba(15, 22, 40, 0.7);
+    border-color: var(--primary-color);
+    transform: translateY(-4px);
+  }
+
+  .stat-value {
+    font-size: 2rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Scroll Indicator */
+  .scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    animation: bounce 2s infinite;
+  }
+
+  .mouse {
+    width: 28px;
+    height: 45px;
+    border: 2px solid var(--primary-color);
+    border-radius: 14px;
+    position: relative;
+    margin: 0 auto 0.75rem;
+  }
+
+  .wheel {
+    width: 4px;
+    height: 8px;
+    background: var(--primary-color);
+    border-radius: 2px;
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: wheel 2s infinite;
+  }
+
+  @keyframes wheel {
+    0% {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(-50%) translateY(12px);
+      opacity: 0;
+    }
+  }
+
+  .scroll-indicator p {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+  }
+
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateX(-50%) translateY(0);
+    }
+    50% {
+      transform: translateX(-50%) translateY(-10px);
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero {
+      min-height: auto;
+      padding: 5rem 1.5rem 2rem;
+    }
+
+    .hero-content {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .hero-title {
+      font-size: 2.25rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+    }
+
+    .hero-description {
+      font-size: 1rem;
+    }
+
+    .hero-buttons {
+      flex-direction: column;
+    }
+
+    .btn {
+      justify-content: center;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .stat-card {
+      padding: 1rem;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+    }
+
+    .image-container {
+      max-width: 300px;
+      margin: 0 auto;
+    }
+  }
+</style>

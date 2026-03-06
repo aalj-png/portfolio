@@ -1,0 +1,322 @@
+---
+/**
+ * Skills Component
+ * Technical skills with categories and soft skills
+ */
+import { portfolioData } from '../data/portfolio';
+
+const { skills } = portfolioData;
+
+const icons: Record<string, string> = {
+  FileCode: '<path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline><path d="M9 15h6M9 11h6"></path>',
+  Database: '<ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5v14a9 3 0 0 0 18 0V5"></path><path d="M3 12a9 3 0 0 0 18 0"></path>',
+  Wrench: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 1 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>',
+  Layers: '<polygon points="12 2 2 7 2 17 12 22 22 17 22 7 12 2"></polygon><polyline points="2 7 12 12 22 7"></polyline><polyline points="2 17 12 12 22 17"></polyline>',
+  Users: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path>',
+  MessageSquare: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>',
+  CheckSquare: '<polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>',
+  Lightbulb: '<path d="M15 12c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3z"></path><path d="M12 1v6m8.66 1.34l-4.24 4.24M21 12h-6m1.34 8.66l-4.24-4.24M12 21v-6M2.34 19.66l4.24-4.24M3 12h6M4.34 4.34l4.24 4.24"></path>',
+};
+
+function getIcon(iconName: string): string {
+  return icons[iconName] || icons.FileCode;
+}
+---
+
+<section id="skills" class="skills" data-reveal>
+  <div class="section-container">
+    <div class="section-header">
+      <h2 class="section-title">Skills & Expertise</h2>
+      <p class="section-subtitle">Technologies and competencies I've developed</p>
+    </div>
+
+    <!-- Technical Skills -->
+    <div class="technical-skills">
+      <h3 class="skills-subtitle">Technical Skills</h3>
+      <div class="skills-divider">
+        <div class="divider-line"></div>
+        <span class="divider-text">Technical</span>
+        <div class="divider-line"></div>
+      </div>
+
+      <div class="skills-grid stagger-children">
+        {skills.technical.map((category) => (
+          <div class="skill-card">
+            <div class="skill-icon-container">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path set:html={getIcon(category.icon)} />
+              </svg>
+            </div>
+            <h4 class="skill-category">{category.category}</h4>
+            <div class="skill-chips">
+              {category.skills.map((skill) => (
+                <span class="chip">{skill}</span>
+              ))}
+            </div>
+            <p class="skill-count">{category.skills.length} skills</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Soft Skills (if available) -->
+    {skills.soft && skills.soft.length > 0 && (
+      <div class="soft-skills">
+        <h3 class="skills-subtitle">Soft Skills</h3>
+        <div class="skills-divider">
+          <div class="divider-line"></div>
+          <span class="divider-text">Soft Skills</span>
+          <div class="divider-line"></div>
+        </div>
+
+        <div class="soft-skills-grid stagger-children">
+          {skills.soft.map((skill) => (
+            <div class="soft-skill-card">
+              <div class="soft-skill-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path set:html={getIcon(skill.icon)} />
+                </svg>
+              </div>
+              <h4>{skill.name}</h4>
+              <p>{skill.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .skills {
+    padding: 5rem 2rem;
+    background: linear-gradient(to bottom, transparent, rgba(0, 212, 255, 0.03));
+  }
+
+  .section-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+
+  .section-subtitle {
+    font-size: 1.125rem;
+    color: var(--text-muted);
+  }
+
+  .technical-skills {
+    margin-bottom: 4rem;
+  }
+
+  .skills-subtitle {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+  }
+
+  .skills-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border-light), transparent);
+  }
+
+  .divider-text {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    flex-shrink: 0;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+  }
+
+  .skill-card {
+    background: var(--glass);
+    padding: 2rem 1.5rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .skill-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .skill-card:hover::before {
+    opacity: 1;
+  }
+
+  .skill-card:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-4px);
+    background: rgba(15, 22, 40, 0.7);
+  }
+
+  .skill-icon-container {
+    width: 54px;
+    height: 54px;
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+  }
+
+  .skill-card:hover .skill-icon-container {
+    transform: scale(1.15);
+    color: var(--accent-color);
+    background: rgba(255, 0, 110, 0.1);
+    border-color: rgba(255, 0, 110, 0.3);
+    filter: brightness(1.2);
+  }
+
+  .skill-category {
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+
+  .skill-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .chip {
+    display: inline-block;
+    padding: 0.3rem 0.75rem;
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+  }
+
+  .skill-card:hover .chip {
+    background: rgba(0, 212, 255, 0.2);
+  }
+
+  .skill-count {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  /* Soft Skills */
+  .soft-skills {
+    margin-top: 4rem;
+  }
+
+  .soft-skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+
+  .soft-skill-card {
+    background: var(--glass);
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .soft-skill-card:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-4px);
+    background: rgba(15, 22, 40, 0.7);
+  }
+
+  .soft-skill-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, rgba(255, 0, 110, 0.2), rgba(0, 212, 255, 0.2));
+    border: 1px solid rgba(255, 0, 110, 0.3);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .soft-skill-card:hover .soft-skill-icon {
+    transform: scale(1.1);
+    box-shadow: 0 0 12px rgba(255, 0, 110, 0.3);
+  }
+
+  .soft-skill-card h4 {
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+  }
+
+  .soft-skill-card p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .skills {
+      padding: 3rem 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.875rem;
+    }
+
+    .skills-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .skill-card {
+      padding: 1.5rem 1rem;
+    }
+
+    .soft-skills-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

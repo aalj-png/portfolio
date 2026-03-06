@@ -1,0 +1,184 @@
+---
+/**
+ * About Component
+ * Two-column grid with numbered cards about the student
+ */
+import { portfolioData } from '../data/portfolio';
+
+const { personal } = portfolioData;
+const bioPoints = [
+  {
+    num: '01',
+    text: 'I am an 18-year-old first-year computer science student at ESISA Fes, passionate about building useful software and friendly web experiences.',
+  },
+  {
+    num: '02',
+    text: 'I discovered my passion for informatique watching friends code and create web applications, which inspired me to pursue software development.',
+  },
+  {
+    num: '03',
+    text: 'My academic studies provide strong fundamentals while personal projects help me explore real-world development practices and modern technologies.',
+  },
+  {
+    num: '04',
+    text: 'I am an active member of charity initiatives and sports clubs at ESISA, where I developed teamwork, communication, and project organization skills.',
+  },
+];
+---
+
+<section id="about" class="about" data-reveal>
+  <div class="section-container">
+    <div class="section-header">
+      <h2 class="section-title">About Me</h2>
+      <p class="section-subtitle">Get to know more about my background and journey</p>
+    </div>
+
+    <div class="about-grid">
+      {bioPoints.map((point) => (
+        <div class="about-card">
+          <div class="card-number">{point.num}</div>
+          <div class="card-accent"></div>
+          <p>{point.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    padding: 5rem 2rem;
+  }
+
+  .section-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+
+  .section-subtitle {
+    font-size: 1.125rem;
+    color: var(--text-muted);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .about-card {
+    background: var(--glass);
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .about-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 0;
+    background: var(--gradient-primary);
+    transition: height 0.3s ease;
+  }
+
+  .about-card:hover::before {
+    height: 100%;
+  }
+
+  .about-card:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-6px);
+    background: rgba(15, 22, 40, 0.7);
+  }
+
+  .about-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .about-card:hover::after {
+    opacity: 1;
+  }
+
+  .card-number {
+    font-family: var(--font-mono);
+    font-size: 2rem;
+    font-weight: 900;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    background: var(--gradient-primary);
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .card-accent {
+    position: absolute;
+    right: -20px;
+    top: -20px;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .about-card p {
+    color: var(--text-muted);
+    line-height: 1.8;
+    font-size: 1rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .about {
+      padding: 3rem 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.875rem;
+    }
+
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .about-card {
+      padding: 1.5rem;
+    }
+
+    .card-number {
+      font-size: 1.5rem;
+    }
+  }
+</style>
